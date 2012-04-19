@@ -1,5 +1,4 @@
 #!/bin/sh
-
 # Script executes git commands recursively on submodules
 
 case "$1" in
