@@ -1,5 +1,11 @@
 #!/bin/sh
+
 # Script executes git commands recursively on submodules
+
+# Usage samples:
+#   gitr status
+#   gitr commit -a -m "some comment"
+#   gitr push
 
 case "$1" in
 	"init") CMD="submodule update --init" ;;
