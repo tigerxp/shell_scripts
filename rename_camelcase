@@ -1,0 +1,5 @@
+#!/bin/sh
+
+rename 's/([a-z])([A-Z])/$1_\l$2/g' *.mp3
+rename 'y/A-Z/a-z/' *.mp3
+
