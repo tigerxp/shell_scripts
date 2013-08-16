@@ -1,0 +1,25 @@
+#!/bin/bash
+
+if [ ! -f ~/git-watched.txt ] ; then
+	echo "USAGE: Create a file git-watched.txt in the home dir with list"
+	echo "   of directories to watch (1 dir per line)"
+	exit 1
+fi
+
+res=""
+
+while read gitdir
+do
+	if [ -d $gitdir ] && [ ! $gitdir == $'\n' ]; then
+		cd $gitdir
+        status=`git status 2 | grep -c "Your branch is ahead of"`
+        if [ $status -ne 0 ]; then
+			res="$res\n$gitdir"
+        fi
+	fi
+done < ~/git-watched.txt
+
+if [ ! $res == "" ]; then
+	notify-send -i face-angry "Git Reminder" "Забыл запушить:\n $res"
+#	echo -e $res
+fi
