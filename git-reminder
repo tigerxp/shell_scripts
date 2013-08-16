@@ -21,5 +21,4 @@ done < ~/git-watched.txt
 
 if [ ! $res == "" ]; then
 	notify-send -i face-angry "Git Reminder" "Забыл запушить:\n $res"
-#	echo -e $res
 fi
