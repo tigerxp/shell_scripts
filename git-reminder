@@ -14,11 +14,12 @@ do
     cd $gitdir
     status=`git status 2 | grep -c "Your branch is ahead of"`
     if [ $status -ne 0 ]; then
-      res="$res\n$gitdir"
+      dirname=`basename $gitdir`
+      res="$res\n$dirname"
     fi
   fi
 done < $HOME/git-watched.txt
 
 if [ ! $res == "" ]; then
-  notify-send -i face-angry "Git Reminder" "Forgot to push:\n $res"
+  notify-send -i face-angry "Git Reminder" "Forgot to push:\n\n $res"
 fi
