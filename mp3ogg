@@ -1,0 +1,17 @@
+#!/bin/bash
+
+# Convert MP3 files in the current directory to OGG 
+
+for file in * 
+do
+    if [ -d "$file" ]
+    then
+        cd "$file"
+        ~/bin/mp3ogg
+        cd ..
+    elif [ ${file##*.}  = "mp3" ]
+    then
+	avconv -y -i "$file" -ab $(mplayer -frames 0 -identify "$file" 2>/dev/null | grep -m 1 'ID_AUDIO_BITRATE' | cut -d '=' -f 2) -acodec libvorbis "${file%.mp3}.ogg"
+    fi
+done
+
