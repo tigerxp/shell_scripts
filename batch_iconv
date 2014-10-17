@@ -1,0 +1,8 @@
+if [ "$#" -lt 1 ]; then
+  echo 'Usage: $0 "file.mask" <source-encoding> <target-encoding>' >&2
+  echo '  For example: $0 "*.php" windows-1251 utf-8 ' >&2
+  exit 1
+fi
+
+find . -name "$1" -type f -exec iconv --verbose -f $2 -t $3 -o {} {} \;
+
