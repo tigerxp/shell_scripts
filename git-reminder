@@ -10,12 +10,17 @@ res=""
 
 while read gitdir
 do
-  if [ -d $gitdir ] && [ ! $gitdir == $'\n' ]; then
+  if [ ! $gitdir == "" ] && [ -d $gitdir ] && [ ! $gitdir == $'\n' ]; then
     cd $gitdir
     status=`git status 2 | grep -c "Your branch is ahead of"`
     if [ $status -ne 0 ]; then
       dirname=`basename $gitdir`
       res="$res\n$dirname"
+    fi
+  else
+    if [ ! $gitdir == "" ]; then
+      echo "Invalid record in git-watched: $gitdir"
+      exit 1
     fi
   fi
 done < $HOME/git-watched.txt
