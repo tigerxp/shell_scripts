@@ -1,0 +1,32 @@
+#!/bin/bash
+
+if [ ! -f $HOME/git-watched.txt ] ; then
+  echo "USAGE: Create a file git-watched.txt in the home dir with list"
+  echo "   of directories to watch (1 dir per line)"
+  exit 1
+fi
+
+commitres=""
+
+while read gitdir
+do
+  if [ -d $gitdir ] && [ ! $gitdir == $'\n' ]; then
+    cd $gitdir
+    commitstatus=`git status -s`
+	if [ ! commitstatus == "" ]; then
+	  commitres="Forgot to commit\n\n$commit_res"
+	fi
+    echo $commitstatus
+  fi
+done < $HOME/git-watched.txt
+
+
+if [ ! $commit_res == "" ]; then
+  $res="Forgot to commit:\n\n$commit_res"
+fi
+
+echo "res=$res"
+
+if [ ! $res == "" ]; then
+  notify-send -i face-angry "Git Commit Reminder" "AAA$res"
+fi
